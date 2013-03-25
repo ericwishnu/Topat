@@ -1,5 +1,6 @@
 package parsingtable;
 
+import java.util.LinkedList;
 import javax.swing.JTable;
 import java.util.Stack;
 import javax.swing.table.JTableHeader;
@@ -20,8 +21,8 @@ public class GUI extends javax.swing.JFrame {
     private String inputString;
     private String[][] rulesContent;
     int steps;
-    Stack inputStack = new Stack();
-    Stack currentStack = new Stack();
+    LinkedList<String> inputStack = new LinkedList();
+    LinkedList<String> currentStack = new LinkedList();
     int lastrow;
     String stack;
 
@@ -265,7 +266,7 @@ public class GUI extends javax.swing.JFrame {
         // jTableResult.setValueAt(arrayToString(inputArray), 0, 2);
         jTableResult.setValueAt(arrayToString(inputArray), lastrow, 2);
         if (steps == 0) {
-            currentStack.push('E');
+            currentStack.add("E");
              stack="E";
         }
 
@@ -284,6 +285,11 @@ public class GUI extends javax.swing.JFrame {
          
         if (lastStack.equals("id")) {
             System.out.println("1");
+            if(lastStack.equals(lastInputStack)){
+                inputStack.pop();
+                jTableResult.setValueAt("Pop " + currentStack.pop() , lastrow, 3);
+                
+            }
             //action pop lastinput stack
             //action pop laststack
             //print out
@@ -292,6 +298,7 @@ public class GUI extends javax.swing.JFrame {
             System.out.println("2");
             if (isOperator(lastStack)) {
                 System.out.println("3");
+                jTableResult.setValueAt("Pop " + inputStack.pop() , lastrow, 3);
                 //poplast input//
                 //print out
             } else {
@@ -311,6 +318,7 @@ public class GUI extends javax.swing.JFrame {
                                    
                                     currentStack.push(rulesContent[h][i]);
                                     stack=rulesContent[h][i];
+                                    //write action
                                     jTableResult.setValueAt(rulesContent[h][i], lastrow, 3);
                                     lastrow++;
                                     break;
@@ -321,15 +329,7 @@ public class GUI extends javax.swing.JFrame {
 
                             }
 
-                        } else {
-                            System.out.println("6");
-                            for (int i = 0; i < rulesExpression.length; i++) {
-                                String temp3 = rulesExpression[i];
-                                if (lastInputStack.equals(temp3)) {
-                                    jTableResult.setValueAt(rulesContent[h][i], 0, 3);
-                                }
-                            }
-                        }
+                        }   
 
                     }
                 }
