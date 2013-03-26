@@ -61,6 +61,9 @@ public class GUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnAction = new javax.swing.JButton();
         lblRes = new javax.swing.JLabel();
+        txtOP = new javax.swing.JTextField();
+        btnOp = new javax.swing.JButton();
+        lblRes2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -151,6 +154,17 @@ public class GUI extends javax.swing.JFrame {
             }
         });
 
+        lblRes.setText("?");
+
+        btnOp.setText("operator");
+        btnOp.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnOpActionPerformed(evt);
+            }
+        });
+
+        lblRes2.setText("?");
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
@@ -176,7 +190,13 @@ public class GUI extends javax.swing.JFrame {
                                         .addComponent(jLabel3)
                                         .addGap(20, 20, 20)
                                         .addComponent(btnAction))
-                                    .addComponent(jLabel4))))))
+                                    .addComponent(jLabel4)))
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
+                                    .addComponent(lblRes2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                                    .addComponent(txtOP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addComponent(btnOp)))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -203,9 +223,9 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jTextInput, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jBtnCheck)
                             .addComponent(jBtnClearResult))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGap(28, 28, 28)
                         .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 37, Short.MAX_VALUE))
+                        .addGap(0, 94, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
@@ -217,8 +237,14 @@ public class GUI extends javax.swing.JFrame {
                         .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                             .addComponent(txtRow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                             .addComponent(jLabel4))
-                        .addGap(18, 18, 18)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblRes, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(18, 18, 18)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtOP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(btnOp))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addComponent(lblRes2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -304,111 +330,69 @@ public class GUI extends javax.swing.JFrame {
     }
 
     private void nextStep() {
-        //String temp = inputStack.pop().toString();
-
-        //print input
-
-        // jTableResult.setValueAt(arrayToString(inputArray), 0, 2);
-        jTableResult.setValueAt(arrayToString(inputArray), lastrow, 2);
+        stack = "";
         if (steps == 0) {
             currentStack.add("E");
-             stack="E";
+            jTableResult.setValueAt(arrayToString(inputArray), lastrow, 2);
+        } else {
+            String temp = "";
+            for (int i = 0; i < inputStack.size(); i++) {
+                temp += inputStack.get(i);
+            }
+            jTableResult.setValueAt(temp, lastrow, 2);
         }
 
-
-
         String lastInputStack = inputStack.peek().toString();
-       
+
         String lastStack = currentStack.peek().toString();
-         jTableResult.setValueAt(stack, lastrow, 1);
-         
-         
-         System.out.println("last input : " + lastInputStack);
-        System.out.println("last stack : " + lastStack);
-       
-        System.out.println(rulesToken.length);
-         
+
+        for (int i = 0; i < currentStack.size(); i++) {
+            stack += currentStack.get(i);
+
+        }
+        System.out.println("STACK[" + currentStack.size() + "] : " + stack);
+        jTableResult.setValueAt(stack, lastrow, 1);//print stack
+
         if (lastStack.equals("id")) {
             System.out.println("1");
-            if(lastStack.equals(lastInputStack)){
+            if (lastStack.equals(lastInputStack)) {
                 inputStack.pop();
-                jTableResult.setValueAt("Pop " + currentStack.pop() , lastrow, 3);
-                
+                jTableResult.setValueAt("Pop " + currentStack.pop(), lastrow, 3);
+
             }
+
             //action pop lastinput stack
             //action pop laststack
             //print out
-        } 
-        else {
+        } else {
             System.out.println("2");
-            if (isOperator(lastStack)) {
+            System.out.println(lastInputStack + "|" + lastStack);
+
+            if (isOperator(lastInputStack)) {
                 System.out.println("3");
-                jTableResult.setValueAt("Pop " + inputStack.pop() , lastrow, 3);
+                jTableResult.setValueAt("Pop " + inputStack.pop(), lastrow, 3);
                 //poplast input//
                 //print out
             } else {
-                System.out.println("4");
-                
-                String action = getAction(lastStack,lastInputStack);
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                
-                for (int h = 1; h < rulesToken.length - 1; h++) {//col
-                    String temp = rulesToken[h];
-                    //System.out.println(temp);
-                    if (temp != null) {
-                        
-                        if (temp.equals(lastInputStack)) {
-                            System.out.println("5");
-                            for (int i = 0; i < rulesExpression.length; i++) {
-                                String temp2 = rulesExpression[i];
-                                //System.out.println(temp2);
-                                if (lastStack.equals(temp2)) {
-                                    String action = rulesContent[h][i];
-                                    String [] actionArray= Spliter(action);
-                                    for(int j=0;j<actionArray.length;j++){
-                                        currentStack.push(actionArray[j]);
-                                    }
-                                    
-                                    stack=rulesContent[h][i];
-                                    //write action
-                                    jTableResult.setValueAt(rulesContent[h][i], lastrow, 3);
-                                    lastrow++;
-                                    break;
-                                } else {
-                                    jTableResult.setValueAt("", lastrow, 3);
-                                }
-
-
-                            }
-
-                        }   
-
-                    }
+                System.out.println("---+----");
+                //System.out.println(lastStack + "|" + lastInputStack);
+                String action = getAction(lastInputStack, lastStack);
+                System.out.println(action);
+                String[] actionArray = Spliter(action);
+                currentStack.pop();
+                for (int j = actionArray.length - 1; j >= 0; j--) {
+                    currentStack.push(actionArray[j]);
+                    System.out.println("action : " + actionArray[j]);
                 }
+                stack = "";
+                for (int i = 0; i < currentStack.size(); i++) {
+                    stack += currentStack.get(i);
 
-                //push action 
+                }
+ 
+                System.out.println("STACK[" + currentStack.size() + "] : " + stack);
+                jTableResult.setValueAt(action, lastrow, 3);
+
 
             }
         }
@@ -416,7 +400,6 @@ public class GUI extends javax.swing.JFrame {
 
 
 
-        
 
 
 
@@ -424,35 +407,37 @@ public class GUI extends javax.swing.JFrame {
 
 
 
+        lastrow++;
         steps++;
     }
-    private String getAction(String col, String row){
 
-        
+    private String getAction(String col, String row) {
+
+
         for (int h = 1; h < rulesToken.length - 1; h++) {//col
-                    String temp = rulesToken[h];
-                    //System.out.println(temp);
-                    if (temp != null) {
-                        
-                        if (temp.equals(col)) {
-                   
-                            for (int i = 0; i < rulesExpression.length; i++) {
-                                String temp2 = rulesExpression[i];
-                                //System.out.println(temp2);
-                                if (row.equals(temp2)) {
-                                    String action = rulesContent[h][i];
+            String temp = rulesToken[h];
+            //System.out.println(temp);
+            if (temp != null) {
 
-                                    return action;
-                                    //write action
-                                   
-                                } 
+                if (temp.equals(col)) {
 
+                    for (int i = 0; i < rulesExpression.length; i++) {
+                        String temp2 = rulesExpression[i];
+                        //System.out.println(temp2);
+                        if (row.equals(temp2)) {
+                            String action = rulesContent[h][i];
 
-                            }
+                            return action;
+                            //write action
 
-                        }   
+                        }
+
 
                     }
+
+                }
+
+            }
         }
         return "";
     }
@@ -482,7 +467,7 @@ public class GUI extends javax.swing.JFrame {
 
         inputArray = input.split(" ");
 
-        pushArrayToStack(inputArray);
+        if(steps==0)pushArrayToStack(inputArray);
         nextStep();
         //printStack(inputStack);
         //printArray(inputArray);
@@ -492,9 +477,21 @@ public class GUI extends javax.swing.JFrame {
     private void btnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActionActionPerformed
         String row = txtRow.getText();
         String col = txtCol.getText();
-        String res = getAction(col,row);
+        String res = getAction(col, row);
         lblRes.setText(res);
     }//GEN-LAST:event_btnActionActionPerformed
+
+    private void btnOpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpActionPerformed
+        String input = txtOP.getText();
+        if (isOperator(input)) {
+            lblRes2.setText("OP");
+        } else {
+            lblRes2.setText("!OP");
+        }
+
+
+
+    }//GEN-LAST:event_btnOpActionPerformed
     public void pushArrayToStack(String[] array) {
 
         for (int i = array.length - 1; i >= 0; i--) {
@@ -554,6 +551,7 @@ public class GUI extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAction;
+    private javax.swing.JButton btnOp;
     private javax.swing.JButton jBtnCheck;
     private javax.swing.JButton jBtnClearResult;
     private javax.swing.JLabel jLabel1;
@@ -566,7 +564,9 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTable jTableRules;
     private javax.swing.JTextField jTextInput;
     private javax.swing.JLabel lblRes;
+    private javax.swing.JLabel lblRes2;
     private javax.swing.JTextField txtCol;
+    private javax.swing.JTextField txtOP;
     private javax.swing.JTextField txtRow;
     // End of variables declaration//GEN-END:variables
 }
