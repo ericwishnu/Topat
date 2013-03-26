@@ -349,7 +349,7 @@ public class GUI extends javax.swing.JFrame {
             } else {
                 System.out.println("4");
                 
-                String action = getAction()
+                String action = getAction(lastStack,lastInputStack);
                 
                 
                 
@@ -426,7 +426,7 @@ public class GUI extends javax.swing.JFrame {
 
         steps++;
     }
-    private String findAction(String col, String row){
+    private String getAction(String col, String row){
 
         
         for (int h = 1; h < rulesToken.length - 1; h++) {//col
@@ -492,7 +492,7 @@ public class GUI extends javax.swing.JFrame {
     private void btnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActionActionPerformed
         String row = txtRow.getText();
         String col = txtCol.getText();
-        String res = findAction(col,row);
+        String res = getAction(col,row);
         lblRes.setText(res);
     }//GEN-LAST:event_btnActionActionPerformed
     public void pushArrayToStack(String[] array) {
