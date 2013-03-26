@@ -385,7 +385,7 @@ public class GUI extends javax.swing.JFrame {
                                 String temp2 = rulesExpression[i];
                                 //System.out.println(temp2);
                                 if (lastStack.equals(temp2)) {
-                                    String action = rulesContent[h][i];
+                                    String actiona = rulesContent[h][i];
                                     String [] actionArray= Spliter(action);
                                     for(int j=0;j<actionArray.length;j++){
                                         currentStack.push(actionArray[j]);
