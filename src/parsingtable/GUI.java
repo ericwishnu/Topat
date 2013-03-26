@@ -55,6 +55,12 @@ public class GUI extends javax.swing.JFrame {
         jTableResult = new javax.swing.JTable();
         jLabel2 = new javax.swing.JLabel();
         jBtnClearResult = new javax.swing.JButton();
+        txtCol = new javax.swing.JTextField();
+        txtRow = new javax.swing.JTextField();
+        jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        btnAction = new javax.swing.JButton();
+        lblRes = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -134,15 +140,43 @@ public class GUI extends javax.swing.JFrame {
 
         jBtnClearResult.setText("Clear Table");
 
+        jLabel3.setText("col");
+
+        jLabel4.setText("row");
+
+        btnAction.setText("action");
+        btnAction.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnActionActionPerformed(evt);
+            }
+        });
+
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addContainerGap()
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(jLabel2)
-                    .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addContainerGap()
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(jLabel2)
+                            .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 236, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(layout.createSequentialGroup()
+                        .addGap(28, 28, 28)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                            .addComponent(lblRes, javax.swing.GroupLayout.PREFERRED_SIZE, 74, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addGroup(layout.createSequentialGroup()
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING, false)
+                                    .addComponent(txtRow, javax.swing.GroupLayout.DEFAULT_SIZE, 46, Short.MAX_VALUE)
+                                    .addComponent(txtCol))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                                    .addGroup(layout.createSequentialGroup()
+                                        .addComponent(jLabel3)
+                                        .addGap(20, 20, 20)
+                                        .addComponent(btnAction))
+                                    .addComponent(jLabel4))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -174,6 +208,17 @@ public class GUI extends javax.swing.JFrame {
                         .addGap(0, 37, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(50, 50, 50)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtCol, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel3)
+                            .addComponent(btnAction))
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
+                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                            .addComponent(txtRow, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel4))
+                        .addGap(18, 18, 18)
+                        .addComponent(lblRes, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -303,6 +348,32 @@ public class GUI extends javax.swing.JFrame {
                 //print out
             } else {
                 System.out.println("4");
+                
+                String action = getAction()
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
+                
                 for (int h = 1; h < rulesToken.length - 1; h++) {//col
                     String temp = rulesToken[h];
                     //System.out.println(temp);
@@ -314,9 +385,12 @@ public class GUI extends javax.swing.JFrame {
                                 String temp2 = rulesExpression[i];
                                 //System.out.println(temp2);
                                 if (lastStack.equals(temp2)) {
+                                    String action = rulesContent[h][i];
+                                    String [] actionArray= Spliter(action);
+                                    for(int j=0;j<actionArray.length;j++){
+                                        currentStack.push(actionArray[j]);
+                                    }
                                     
-                                   
-                                    currentStack.push(rulesContent[h][i]);
                                     stack=rulesContent[h][i];
                                     //write action
                                     jTableResult.setValueAt(rulesContent[h][i], lastrow, 3);
@@ -352,6 +426,36 @@ public class GUI extends javax.swing.JFrame {
 
         steps++;
     }
+    private String findAction(String col, String row){
+
+        
+        for (int h = 1; h < rulesToken.length - 1; h++) {//col
+                    String temp = rulesToken[h];
+                    //System.out.println(temp);
+                    if (temp != null) {
+                        
+                        if (temp.equals(col)) {
+                   
+                            for (int i = 0; i < rulesExpression.length; i++) {
+                                String temp2 = rulesExpression[i];
+                                //System.out.println(temp2);
+                                if (row.equals(temp2)) {
+                                    String action = rulesContent[h][i];
+
+                                    return action;
+                                    //write action
+                                   
+                                } 
+
+
+                            }
+
+                        }   
+
+                    }
+        }
+        return "";
+    }
 
     private String arrayToString(String[] array) {
         String temp = "";
@@ -384,6 +488,13 @@ public class GUI extends javax.swing.JFrame {
         //printArray(inputArray);
 
     }//GEN-LAST:event_jBtnCheckActionPerformed
+
+    private void btnActionActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnActionActionPerformed
+        String row = txtRow.getText();
+        String col = txtCol.getText();
+        String res = findAction(col,row);
+        lblRes.setText(res);
+    }//GEN-LAST:event_btnActionActionPerformed
     public void pushArrayToStack(String[] array) {
 
         for (int i = array.length - 1; i >= 0; i--) {
@@ -442,14 +553,20 @@ public class GUI extends javax.swing.JFrame {
         });
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JButton btnAction;
     private javax.swing.JButton jBtnCheck;
     private javax.swing.JButton jBtnClearResult;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JScrollPane jScrollPane2;
     private javax.swing.JTable jTableResult;
     private javax.swing.JTable jTableRules;
     private javax.swing.JTextField jTextInput;
+    private javax.swing.JLabel lblRes;
+    private javax.swing.JTextField txtCol;
+    private javax.swing.JTextField txtRow;
     // End of variables declaration//GEN-END:variables
 }
