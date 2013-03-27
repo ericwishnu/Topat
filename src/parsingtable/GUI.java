@@ -70,9 +70,9 @@ public class GUI extends javax.swing.JFrame {
         jTableRules.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {"E", "T E'", "T E'", "", "", null, null},
-                {"E'", "", null, "+ T E'", "", "", null},
+                {"E'", "", null, "+ T E'", "", "e", "e"},
                 {"T", "F T'", "F T'", null, null, null, null},
-                {"T'", null, "", null, "* F T'", null, null},
+                {"T'", null, "", "e", "* F T'", "e", "e"},
                 {"F", "( E )", "id", null, null, null, null}
             },
             new String [] {
@@ -259,7 +259,7 @@ public class GUI extends javax.swing.JFrame {
         rulesToken = new String[rulesColumnCount + 1];
         rulesExpression = new String[rulesRowCount + 1];
 
-
+        //print the terminal 
         JTableHeader th = jTableRules.getTableHeader();
         TableColumnModel tcm = th.getColumnModel();
         for (int x = 1, y = tcm.getColumnCount(); x < y; x++) {
@@ -270,6 +270,7 @@ public class GUI extends javax.swing.JFrame {
         }
         System.out.println("------");
 
+        //print the non terminal id 
         for (int i = 0; i < rulesRowCount; i++) {//row
             if (GetData(jTableRules, i, 0) != null) {
                 rulesExpression[i] = GetData(jTableRules, i, 0).toString();
@@ -278,6 +279,8 @@ public class GUI extends javax.swing.JFrame {
 
         }
         System.out.println("------");
+        
+        //print the stack inside of the terminal and non terminal 
         rulesContent = new String[rulesColumnCount][rulesRowCount];
         for (int h = 1; h < rulesColumnCount; h++) {
             for (int i = 0; i < rulesRowCount; i++) {
@@ -379,6 +382,12 @@ public class GUI extends javax.swing.JFrame {
                 String action = getAction(lastInputStack, lastStack);
                 System.out.println(action);
                 String[] actionArray = Spliter(action);
+                
+                if(actionArray[0].equals("e")){
+                    currentStack.pop();
+                }
+                
+                else{
                 currentStack.pop();
                 for (int j = actionArray.length - 1; j >= 0; j--) {
                     currentStack.push(actionArray[j]);
@@ -393,7 +402,7 @@ public class GUI extends javax.swing.JFrame {
                 System.out.println("STACK[" + currentStack.size() + "] : " + stack);
                 jTableResult.setValueAt(action, lastrow, 3);
 
-
+                }
             }
         }
 
