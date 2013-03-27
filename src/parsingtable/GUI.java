@@ -352,7 +352,7 @@ public class GUI extends javax.swing.JFrame {
         }
 
         if (inputStack.isEmpty()) {
-            JOptionPane.showMessageDialog (null, "Done Calculating'");
+            JOptionPane.showMessageDialog(null, "Done Calculating'");
         } else {
             String lastInputStack = inputStack.peek().toString();
 
@@ -545,6 +545,10 @@ public class GUI extends javax.swing.JFrame {
         for (int i = 0; i < array.length; i++) {
             System.out.println(array[i]);
         }
+    }
+
+    private void reset() {
+        dataModel.setRowCount(0);
     }
 
     /**
