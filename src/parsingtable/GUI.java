@@ -279,7 +279,7 @@ public class GUI extends javax.swing.JFrame {
 
         }
         System.out.println("------");
-        
+
         //print the stack inside of the terminal and non terminal 
         rulesContent = new String[rulesColumnCount][rulesRowCount];
         for (int h = 1; h < rulesColumnCount; h++) {
@@ -333,11 +333,16 @@ public class GUI extends javax.swing.JFrame {
     }
 
     private void nextStep() {
+
         stack = "";
+
+        //step pertama
         if (steps == 0) {
             currentStack.add("E");
+            currentStack.add("$");
             jTableResult.setValueAt(arrayToString(inputArray), lastrow, 2);
         } else {
+            //step selain step pertama
             String temp = "";
             for (int i = 0; i < inputStack.size(); i++) {
                 temp += inputStack.get(i);
@@ -345,72 +350,78 @@ public class GUI extends javax.swing.JFrame {
             jTableResult.setValueAt(temp, lastrow, 2);
         }
 
-        String lastInputStack = inputStack.peek().toString();
 
+        // starting masukin ke last stack dan ke input stack
+        String lastInputStack = inputStack.peek().toString();
         String lastStack = currentStack.peek().toString();
 
+        //get the stack
         for (int i = 0; i < currentStack.size(); i++) {
             stack += currentStack.get(i);
 
         }
         System.out.println("STACK[" + currentStack.size() + "] : " + stack);
-        jTableResult.setValueAt(stack, lastrow, 1);//print stack
+        //print the latest stack to the table
+        jTableResult.setValueAt(stack, lastrow, 1);
 
-        if (lastStack.equals("id")) {
+
+        //if last stack equals to id
+        if (lastStack.equals(lastInputStack)) {
+
+
             System.out.println("1");
-            if (lastStack.equals(lastInputStack)) {
-                inputStack.pop();
-                jTableResult.setValueAt("Pop " + currentStack.pop(), lastrow, 3);
 
+            inputStack.pop();
+            jTableResult.setValueAt("Pop " + currentStack.pop(), lastrow, 3);
+
+        } else if (lastStack.equals("e")) {
+            currentStack.pop();
+            for (int i = 0; i < currentStack.size(); i++) {
+                stack += currentStack.get(i);
             }
-
-            //action pop lastinput stack
-            //action pop laststack
-            //print out
+            System.out.println("STACK[" + currentStack.size() + "] : " + stack);
+            //print the latest stack to the table
+            jTableResult.setValueAt(stack, lastrow, 1);
+        } else if (lastInputStack.equals(lastStack) && lastStack.equals("$")) {
+            System.out.print("Accepted");
         } else {
-            System.out.println("2");
             System.out.println(lastInputStack + "|" + lastStack);
 
-            if (isOperator(lastInputStack)) {
-                System.out.println("3");
-                jTableResult.setValueAt("Pop " + inputStack.pop(), lastrow, 3);
-                //poplast input//
-                //print out
-            } else {
-                System.out.println("---+----");
-                //System.out.println(lastStack + "|" + lastInputStack);
-                String action = getAction(lastInputStack, lastStack);
-                System.out.println(action);
-                String[] actionArray = Spliter(action);
-                
-                if(actionArray[0].equals("e")){
-                    currentStack.pop();
-                }
-                
-                else{
-                currentStack.pop();
+            System.out.println("---+----");
+            //get the action by last stack n input
+            String action = getAction(lastInputStack, lastStack);
+            System.out.println(action);
+            String[] actionArray = Spliter(action);
+//
+          
+
+            if (!action.equals("e")) {
+
+currentStack.pop();
                 for (int j = actionArray.length - 1; j >= 0; j--) {
+
+                    
                     currentStack.push(actionArray[j]);
+
+
                     System.out.println("action : " + actionArray[j]);
                 }
-                stack = "";
-                for (int i = 0; i < currentStack.size(); i++) {
-                    stack += currentStack.get(i);
-
-                }
- 
-                System.out.println("STACK[" + currentStack.size() + "] : " + stack);
-                jTableResult.setValueAt(action, lastrow, 3);
-
-                }
+            } else {
+                currentStack.pop();
             }
+
+
+            stack = "";
+            for (int i = 0; i < currentStack.size(); i++) {
+                stack += currentStack.get(i);
+            }
+            //print the action 
+            System.out.println("STACK[" + currentStack.size() + "] : " + stack);
+            jTableResult.setValueAt(action, lastrow, 3);
+
+
+
         }
-
-
-
-
-
-
 
 
 
@@ -418,6 +429,8 @@ public class GUI extends javax.swing.JFrame {
 
         lastrow++;
         steps++;
+
+
     }
 
     private String getAction(String col, String row) {
@@ -476,7 +489,9 @@ public class GUI extends javax.swing.JFrame {
 
         inputArray = input.split(" ");
 
-        if(steps==0)pushArrayToStack(inputArray);
+        if (steps == 0) {
+            pushArrayToStack(inputArray);
+        }
         nextStep();
         //printStack(inputStack);
         //printArray(inputArray);
@@ -502,8 +517,9 @@ public class GUI extends javax.swing.JFrame {
 
     }//GEN-LAST:event_btnOpActionPerformed
     public void pushArrayToStack(String[] array) {
-
+        inputStack.push("$");
         for (int i = array.length - 1; i >= 0; i--) {
+
             inputStack.push(array[i]);
             // System.out.println(inputStack.peek());
         }
