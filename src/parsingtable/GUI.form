@@ -51,14 +51,6 @@
                                   <Component id="jLabel4" min="-2" max="-2" attributes="0"/>
                               </Group>
                           </Group>
-                          <Group type="102" alignment="0" attributes="0">
-                              <Group type="103" groupAlignment="1" max="-2" attributes="0">
-                                  <Component id="lblRes2" alignment="0" max="32767" attributes="0"/>
-                                  <Component id="txtOP" alignment="0" pref="43" max="32767" attributes="0"/>
-                              </Group>
-                              <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                              <Component id="btnOp" min="-2" max="-2" attributes="0"/>
-                          </Group>
                       </Group>
                   </Group>
               </Group>
@@ -95,8 +87,8 @@
                           <Component id="jBtnClearResult" alignment="3" min="-2" max="-2" attributes="0"/>
                       </Group>
                       <EmptySpace min="-2" pref="28" max="-2" attributes="0"/>
-                      <Component id="jScrollPane2" min="-2" pref="348" max="-2" attributes="0"/>
-                      <EmptySpace min="0" pref="94" max="32767" attributes="0"/>
+                      <Component id="jScrollPane2" min="-2" pref="413" max="-2" attributes="0"/>
+                      <EmptySpace min="0" pref="57" max="32767" attributes="0"/>
                   </Group>
                   <Group type="102" alignment="0" attributes="0">
                       <Component id="jScrollPane1" min="-2" pref="107" max="-2" attributes="0"/>
@@ -113,13 +105,6 @@
                       </Group>
                       <EmptySpace max="-2" attributes="0"/>
                       <Component id="lblRes" min="-2" pref="24" max="-2" attributes="0"/>
-                      <EmptySpace min="-2" pref="18" max="-2" attributes="0"/>
-                      <Group type="103" groupAlignment="3" attributes="0">
-                          <Component id="txtOP" alignment="3" min="-2" max="-2" attributes="0"/>
-                          <Component id="btnOp" alignment="3" min="-2" max="-2" attributes="0"/>
-                      </Group>
-                      <EmptySpace type="unrelated" max="-2" attributes="0"/>
-                      <Component id="lblRes2" min="-2" pref="25" max="-2" attributes="0"/>
                       <EmptySpace max="32767" attributes="0"/>
                   </Group>
               </Group>
@@ -261,7 +246,7 @@
         <Component class="javax.swing.JTable" name="jTableResult">
           <Properties>
             <Property name="model" type="javax.swing.table.TableModel" editor="org.netbeans.modules.form.editors2.TableModelEditor">
-              <Table columnCount="4" rowCount="20">
+              <Table columnCount="4" rowCount="35">
                 <Column editable="true" title="Match" type="java.lang.String"/>
                 <Column editable="true" title="Stack" type="java.lang.String"/>
                 <Column editable="true" title="Input" type="java.lang.String"/>
@@ -271,22 +256,22 @@
             <Property name="columnModel" type="javax.swing.table.TableColumnModel" editor="org.netbeans.modules.form.editors2.TableColumnModelEditor">
               <TableColumnModel selectionModel="0">
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title value="Match"/>
+                  <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title value="Stack"/>
+                  <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title value="Input"/>
+                  <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
                 <Column maxWidth="-1" minWidth="-1" prefWidth="-1" resizable="true">
-                  <Title value="Action"/>
+                  <Title/>
                   <Editor/>
                   <Renderer/>
                 </Column>
@@ -308,6 +293,9 @@
       <Properties>
         <Property name="text" type="java.lang.String" value="Clear Table"/>
       </Properties>
+      <Events>
+        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jBtnClearResultActionPerformed"/>
+      </Events>
     </Component>
     <Component class="javax.swing.JTextField" name="txtCol">
     </Component>
@@ -332,21 +320,6 @@
       </Events>
     </Component>
     <Component class="javax.swing.JLabel" name="lblRes">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="?"/>
-      </Properties>
-    </Component>
-    <Component class="javax.swing.JTextField" name="txtOP">
-    </Component>
-    <Component class="javax.swing.JButton" name="btnOp">
-      <Properties>
-        <Property name="text" type="java.lang.String" value="operator"/>
-      </Properties>
-      <Events>
-        <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="btnOpActionPerformed"/>
-      </Events>
-    </Component>
-    <Component class="javax.swing.JLabel" name="lblRes2">
       <Properties>
         <Property name="text" type="java.lang.String" value="?"/>
       </Properties>

@@ -26,6 +26,8 @@ public class GUI extends javax.swing.JFrame {
     LinkedList<String> currentStack = new LinkedList();
     int lastrow;
     String stack;
+    String match;
+    
 
     /**
      * Creates new form GUI
@@ -35,6 +37,7 @@ public class GUI extends javax.swing.JFrame {
         getRules();
         steps = 0;
         lastrow = 0;
+        match="";
         //printContent();
     }
 
@@ -62,9 +65,6 @@ public class GUI extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         btnAction = new javax.swing.JButton();
         lblRes = new javax.swing.JLabel();
-        txtOP = new javax.swing.JTextField();
-        btnOp = new javax.swing.JButton();
-        lblRes2 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -120,6 +120,21 @@ public class GUI extends javax.swing.JFrame {
                 {null, null, null, null},
                 {null, null, null, null},
                 {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
+                {null, null, null, null},
                 {null, null, null, null}
             },
             new String [] {
@@ -135,14 +150,15 @@ public class GUI extends javax.swing.JFrame {
             }
         });
         jScrollPane2.setViewportView(jTableResult);
-        jTableResult.getColumnModel().getColumn(0).setHeaderValue("Match");
-        jTableResult.getColumnModel().getColumn(1).setHeaderValue("Stack");
-        jTableResult.getColumnModel().getColumn(2).setHeaderValue("Input");
-        jTableResult.getColumnModel().getColumn(3).setHeaderValue("Action");
 
         jLabel2.setText("Rules");
 
         jBtnClearResult.setText("Clear Table");
+        jBtnClearResult.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jBtnClearResultActionPerformed(evt);
+            }
+        });
 
         jLabel3.setText("col");
 
@@ -156,15 +172,6 @@ public class GUI extends javax.swing.JFrame {
         });
 
         lblRes.setText("?");
-
-        btnOp.setText("operator");
-        btnOp.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                btnOpActionPerformed(evt);
-            }
-        });
-
-        lblRes2.setText("?");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -191,13 +198,7 @@ public class GUI extends javax.swing.JFrame {
                                         .addComponent(jLabel3)
                                         .addGap(20, 20, 20)
                                         .addComponent(btnAction))
-                                    .addComponent(jLabel4)))
-                            .addGroup(layout.createSequentialGroup()
-                                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING, false)
-                                    .addComponent(lblRes2, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
-                                    .addComponent(txtOP, javax.swing.GroupLayout.Alignment.LEADING, javax.swing.GroupLayout.DEFAULT_SIZE, 43, Short.MAX_VALUE))
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                                .addComponent(btnOp)))))
+                                    .addComponent(jLabel4))))))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel1)
@@ -225,8 +226,8 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jBtnCheck)
                             .addComponent(jBtnClearResult))
                         .addGap(28, 28, 28)
-                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 348, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(0, 94, Short.MAX_VALUE))
+                        .addComponent(jScrollPane2, javax.swing.GroupLayout.PREFERRED_SIZE, 413, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addGap(0, 57, Short.MAX_VALUE))
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jScrollPane1, javax.swing.GroupLayout.PREFERRED_SIZE, 107, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addGap(50, 50, 50)
@@ -240,12 +241,6 @@ public class GUI extends javax.swing.JFrame {
                             .addComponent(jLabel4))
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(lblRes, javax.swing.GroupLayout.PREFERRED_SIZE, 24, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                            .addComponent(txtOP, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                            .addComponent(btnOp))
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                        .addComponent(lblRes2, javax.swing.GroupLayout.PREFERRED_SIZE, 25, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))))
         );
 
@@ -316,9 +311,6 @@ public class GUI extends javax.swing.JFrame {
         }
     }
 
-    private void compareInput() {
-    }
-
     private boolean isOperator(String input) {
 
         String[] rules = new String[]{"+", "*", "(", ")"};
@@ -341,7 +333,8 @@ public class GUI extends javax.swing.JFrame {
         if (steps == 0) {
             currentStack.add("E");
             currentStack.add("$");
-            jTableResult.setValueAt(arrayToString(inputArray), lastrow, 2);
+
+            jTableResult.setValueAt(arrayToString(inputArray)+"$", lastrow, 2);
         } else {
             //step selain step pertama
             String temp = "";
@@ -371,11 +364,17 @@ public class GUI extends javax.swing.JFrame {
             //if last stack equals to id
             if (lastStack.equals(lastInputStack)) {
 
+                if (lastInputStack.equals(lastStack) && lastStack.equals("$")) {
+                    System.out.print("Accepted");
+                    JOptionPane.showMessageDialog(null, "Accepted!");
 
-                System.out.println("1");
+                } else {
+                    match+=inputStack.pop();
+                    jTableResult.setValueAt(match, lastrow, 0);
+                    jTableResult.setValueAt("Pop " + currentStack.pop(), lastrow, 3);
+                }
 
-                inputStack.pop();
-                jTableResult.setValueAt("Pop " + currentStack.pop(), lastrow, 3);
+
 
             } else if (lastStack.equals("e")) {
                 currentStack.pop();
@@ -385,8 +384,7 @@ public class GUI extends javax.swing.JFrame {
                 System.out.println("STACK[" + currentStack.size() + "] : " + stack);
                 //print the latest stack to the table
                 jTableResult.setValueAt(stack, lastrow, 1);
-            } else if (lastInputStack.equals(lastStack) && lastStack.equals("$")) {
-                System.out.print("Accepted");
+
             } else {
                 System.out.println(lastInputStack + "|" + lastStack);
 
@@ -433,10 +431,8 @@ public class GUI extends javax.swing.JFrame {
             lastrow++;
             steps++;
 
+
         }
-        // starting masukin ke last stack dan ke input stack
-
-
 
     }
 
@@ -512,17 +508,9 @@ public class GUI extends javax.swing.JFrame {
         lblRes.setText(res);
     }//GEN-LAST:event_btnActionActionPerformed
 
-    private void btnOpActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnOpActionPerformed
-        String input = txtOP.getText();
-        if (isOperator(input)) {
-            lblRes2.setText("OP");
-        } else {
-            lblRes2.setText("!OP");
-        }
-
-
-
-    }//GEN-LAST:event_btnOpActionPerformed
+    private void jBtnClearResultActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jBtnClearResultActionPerformed
+        reset();
+    }//GEN-LAST:event_jBtnClearResultActionPerformed
     public void pushArrayToStack(String[] array) {
         inputStack.push("$");
         for (int i = array.length - 1; i >= 0; i--) {
@@ -530,8 +518,6 @@ public class GUI extends javax.swing.JFrame {
             inputStack.push(array[i]);
             // System.out.println(inputStack.peek());
         }
-
-
     }
 
     private void printStack(Stack stack) {
@@ -548,7 +534,6 @@ public class GUI extends javax.swing.JFrame {
     }
 
     private void reset() {
-        dataModel.setRowCount(0);
     }
 
     /**
@@ -587,7 +572,6 @@ public class GUI extends javax.swing.JFrame {
     }
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAction;
-    private javax.swing.JButton btnOp;
     private javax.swing.JButton jBtnCheck;
     private javax.swing.JButton jBtnClearResult;
     private javax.swing.JLabel jLabel1;
@@ -600,9 +584,7 @@ public class GUI extends javax.swing.JFrame {
     private javax.swing.JTable jTableRules;
     private javax.swing.JTextField jTextInput;
     private javax.swing.JLabel lblRes;
-    private javax.swing.JLabel lblRes2;
     private javax.swing.JTextField txtCol;
-    private javax.swing.JTextField txtOP;
     private javax.swing.JTextField txtRow;
     // End of variables declaration//GEN-END:variables
 }
