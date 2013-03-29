@@ -547,9 +547,6 @@ public class GUI extends javax.swing.JFrame {
         }
     }
 
-    private void reset() {
-        dataModel.setRowCount(0);
-    }
 
     /**
      * @param args the command line arguments
